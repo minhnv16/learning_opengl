@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
 char const* VertexShaderSource = R"GLSL(
 		#version 130
@@ -44,16 +45,7 @@ char const* FragmentShaderSource = R"GLSL(
 
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode) {
-	if (action == GLFW_PRESS) {
 
-	}
-	else if (action == GLFW_RELEASE) {
-
-	}
-	std::cout << "key:" << key << std::endl;
-
-}
 void get_resolution(int & window_width, int &window_height) {
 	const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 

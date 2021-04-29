@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Learn1.cpp" />
+    <ClCompile Include="Learn2.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Source0_sample_draw_aray_triangle.cpp" />
     <ClCompile Include="Source1_sample_draw_element_triangle.cpp" />

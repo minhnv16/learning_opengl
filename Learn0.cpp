@@ -3,12 +3,31 @@
 
 #include <iostream>
 #include <string>
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
+glm::mat4x4 matMVP = glm::mat4x4(1.0f);
+GLuint shaderProgram;
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode) {
+	if (action == GLFW_PRESS) {
+		unsigned int aMvpLocation = glGetUniformLocation(shaderProgram, "mvp");
+		//glm::mat4x4 matMVP = glm::mat4x4(1.0f);
+		//matMVP = glm::translate(matMVP, glm::vec3(0.1f, 0.1f, 0));
+		matMVP = glm::scale(matMVP, glm::vec3(1.1f, 1.1f, 0));
 
+		glUniformMatrix4fv(aMvpLocation, 1, GL_FALSE, glm::value_ptr(matMVP));
+	}
+	else if (action == GLFW_RELEASE) {
 
-int learning() {
+	}
+	std::cout << "key:" << key << std::endl;
+
+}
+
+int learn0() {
 
 	GLFWwindow* window = 0;
 	if (GLFW_FALSE == glfwInit()) {
@@ -42,8 +61,9 @@ int learning() {
 		 0.5f, -0.5f, 0.0f,
 		 0.5f,  0.0f, 0.0f,
 		 0.0f,  0.5f, 0.0f,
-
 	};
+
+
 
 	GLuint Elements[] = {
 		0,1,2
@@ -70,15 +90,14 @@ int learning() {
 
 
 	char const* VertexShaderSource = R"GLSL(
-
-		#version 130
-		 in vec3 aPos;
+		#version 330
+		uniform mat4 mvp;
+		in vec3 aPos;
+		
 		void main()
 		{
-			gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);
+			gl_Position = mvp * vec4(aPos.x, aPos.y, aPos.z, 1.0);
 		}
-
-
 		)GLSL";
 
 	GLuint vertexShader;
@@ -98,7 +117,7 @@ int learning() {
 
 
 	char const* FragmentShaderSource = R"GLSL(
-			#version 130
+			#version 330
 			out vec4 FragColor;
 			void main()
 			{
@@ -120,7 +139,6 @@ int learning() {
 	}
 
 
-	GLuint shaderProgram;
 	shaderProgram = glCreateProgram();
 	glAttachShader(shaderProgram, vertexShader);
 	glAttachShader(shaderProgram, fragmentShader);
@@ -137,17 +155,33 @@ int learning() {
 	//glBindVertexArray(VAO);
 
 	//linking vertex attribute
+	unsigned int aPosLocation = glGetAttribLocation(shaderProgram, "aPos");
+	glVertexAttribPointer(aPosLocation, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), 0);
+	glEnableVertexAttribArray(aPosLocation);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), 0);
-	glEnableVertexAttribArray(0);
+	
 
 
+
+	unsigned int aMvpLocation = glGetUniformLocation(shaderProgram, "mvp");
+	//matMVP = glm::translate(matMVP, glm::vec3(0.1f, 0.1f, 0));
+	glUniformMatrix4fv(aMvpLocation, 1, GL_FALSE, glm::value_ptr(matMVP));
+	
+	
 
 	while (!glfwWindowShouldClose(window))
 	{
+		//unsigned int aMvpLocation = glGetUniformLocation(shaderProgram, "mvp");
+		////glm::mat4x4 matMVP = glm::mat4x4(1.0f);
+		//glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+		////transform = glm::translate(transform, glm::vec3(0.1f, -0.1f, 0.0f));
+		//transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+
+		//glUniformMatrix4fv(aMvpLocation, 1, GL_FALSE, glm::value_ptr(transform));
+
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-
+		  
 		glUseProgram(shaderProgram);
 		glBindVertexArray(VAO);
 
