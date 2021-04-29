@@ -14,13 +14,13 @@ int sample_drawing_triangle_index()
     const unsigned int SCR_WIDTH = 800;
     const unsigned int SCR_HEIGHT = 600;
 
-    const char* vertexShaderSource = "#version 330 core\n"
-    "layout (location = 0) in vec3 aPos;\n"
+    const char* vertexShaderSource = "#version 130 core\n"
+    " in vec3 aPos;\n"
     "void main()\n"
     "{\n"
     "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
     "}\0";
-    const char* fragmentShaderSource = "#version 330 core\n"
+    const char* fragmentShaderSource = "#version 130 core\n"
     "out vec4 FragColor;\n"
     "void main()\n"
     "{\n"

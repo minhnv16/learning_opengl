@@ -20,8 +20,8 @@ int sample_draw_aray_triangle()
 
 char const* vertexShaderSource = R"GLSL(
 
-		#version 330
-		layout (location = 0) in vec3 aPos;
+		#version 130
+		 in vec3 aPos;
 		void main()
 		{
 			gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);
@@ -31,7 +31,7 @@ char const* vertexShaderSource = R"GLSL(
 		)GLSL";
 
 char const* fragmentShaderSource = R"GLSL(
-			#version 330
+			#version 130
 			out vec4 FragColor;
 			void main()
 			{
