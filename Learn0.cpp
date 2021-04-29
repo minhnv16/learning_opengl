@@ -113,9 +113,6 @@ int learn0() {
 		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
 	}
 
-
-
-
 	char const* FragmentShaderSource = R"GLSL(
 			#version 330
 			out vec4 FragColor;
