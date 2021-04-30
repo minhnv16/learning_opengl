@@ -231,7 +231,7 @@ int learn2() {
 
 
 	glEnable(GL_PRIMITIVE_RESTART);
-	glPrimitiveRestartIndex(0);
+	//glPrimitiveRestartIndex(0);
 
 	int n = 0;
 	while (!glfwWindowShouldClose(window))

@@ -6,7 +6,7 @@ CC = g++ -std=c++11
 
 # COMPILER_FLAGS specifies the additional compilation options we're using
 # -Wall will turn on all standard warnings
-COMPILER_FLAGS = -Wall
+COMPILER_FLAGS = -Wall -O0
 
 # LINKER_FLAGS specifies the libraries we're linking against
 LINKER_FLAGS = -lGL -lGLU -lglut -lGLEW -lglfw3 -lX11 -lXxf86vm -lXrandr -lpthread -lXi -ldl -lXinerama -lXcursor
