@@ -6,6 +6,10 @@
     <ClCompile Include="Main.cpp">
       <Filter>NewFilter1</Filter>
     </ClCompile>
+    <ClCompile Include="Learn1.cpp" />
+    <ClCompile Include="Learn2.cpp" />
+    <ClCompile Include="Source0_sample_draw_aray_triangle.cpp" />
+    <ClCompile Include="Source2_sample_drawing_triangle_index.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NewFilter1">

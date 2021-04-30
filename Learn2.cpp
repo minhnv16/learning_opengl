@@ -132,7 +132,7 @@ int learn2() {
 
 
 	char const* VertexShaderSource = R"GLSL(
-		#version 130
+		#version 330
 
 		in vec3 aPos;
 		uniform mat4 mvp;
@@ -170,7 +170,7 @@ int learn2() {
 
 
 	char const* FragmentShaderSource = R"GLSL(
-		#version 130
+		#version 330
 		uniform vec4 vecColor;
 
 
