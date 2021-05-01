@@ -8,7 +8,7 @@
 #include "glm/gtc/type_ptr.hpp"
 
 
-extern glm::mat4x4 matMVP2 = glm::mat4x4(1.0f);
+glm::mat4x4 matMVP2 = glm::mat4x4(1.0f);
 
 unsigned int aVecColorLocation;
 unsigned int aSelectedVecColorLocation;
@@ -18,6 +18,8 @@ glm::vec4 vecSelectedColor = glm::vec4(1.f, 0.f, 0.f, 1.f);
 glm::vec4 vecNormalColor = glm::vec4(0.f, 0.f, 1.f, 1.f);
 
 extern GLuint shaderProgram;
+extern GLuint shaderProgram2;
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 void key_callback_learn2(GLFWwindow* window, int key, int scancode, int action, int mode) {

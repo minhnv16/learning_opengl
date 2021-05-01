@@ -1,5 +1,5 @@
 # OBJS specifies which files to compile as part of the project
-OBJS = Main.cpp Learn0.cpp Learn1.cpp Learn2.cpp Source0_sample_draw_aray_triangle.cpp Source1_sample_draw_element_triangle.cpp Source2_sample_drawing_triangle_index.cpp
+OBJS = Main.cpp Learn0.cpp Learn1.cpp Learn2.cpp Learn4.cpp Source0_sample_draw_aray_triangle.cpp Source1_sample_draw_element_triangle.cpp Source2_sample_drawing_triangle_index.cpp
 
 # CC specifies which compiler we're using
 CC = g++ -std=c++11 

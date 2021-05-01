@@ -9,6 +9,8 @@
 
 glm::mat4x4 matMVP = glm::mat4x4(1.0f);
 GLuint shaderProgram;
+GLuint shaderProgram2;
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode) {
