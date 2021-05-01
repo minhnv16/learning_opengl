@@ -7,7 +7,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
-glm::mat4x4 matMVP = glm::mat4x4(1.0f);
+glm::mat4x4 matMVP0 = glm::mat4x4(1.0f);
 GLuint shaderProgram;
 GLuint shaderProgram2;
 
@@ -18,9 +18,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		unsigned int aMvpLocation = glGetUniformLocation(shaderProgram, "mvp");
 		//glm::mat4x4 matMVP = glm::mat4x4(1.0f);
 		//matMVP = glm::translate(matMVP, glm::vec3(0.1f, 0.1f, 0));
-		matMVP = glm::scale(matMVP, glm::vec3(1.1f, 1.1f, 0));
+		matMVP0 = glm::scale(matMVP0, glm::vec3(1.1f, 1.1f, 0));
 
-		glUniformMatrix4fv(aMvpLocation, 1, GL_FALSE, glm::value_ptr(matMVP));
+		glUniformMatrix4fv(aMvpLocation, 1, GL_FALSE, glm::value_ptr(matMVP0));
 	}
 	else if (action == GLFW_RELEASE) {
 
@@ -164,7 +164,7 @@ int learn0() {
 
 	unsigned int aMvpLocation = glGetUniformLocation(shaderProgram, "mvp");
 	//matMVP = glm::translate(matMVP, glm::vec3(0.1f, 0.1f, 0));
-	glUniformMatrix4fv(aMvpLocation, 1, GL_FALSE, glm::value_ptr(matMVP));
+	glUniformMatrix4fv(aMvpLocation, 1, GL_FALSE, glm::value_ptr(matMVP0));
 	
 	
 
