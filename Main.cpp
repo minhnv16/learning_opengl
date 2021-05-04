@@ -7,11 +7,13 @@ int learn2();//scale rectangle and triangle
 int learn3();//split  into 2 array buffer, 2 program
 int learn4();//add vertex information object id to vertex
 namespace l5 {
-	int learn5();
-
+	int main();	//buffer sub data to change object position
+}
+namespace l6 {
+	int main();	//learing transformation
 }
 
 int main() {
-	l5::learn5();
+	l6::main();
 	return 0;
 }

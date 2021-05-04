@@ -8,10 +8,8 @@
 #include "glm/gtc/type_ptr.hpp"
 #include <vector>
 
-namespace l5 {
+namespace l6 {
 
-//glm::mat4x4 matMVP[] = { glm::mat4x4(1.0f) , glm::mat4x4(1.0f) , glm::mat4x4(1.0f) , glm::mat4x4(1.0f) };
-//unsigned int aMvpLocation[4];
 
 unsigned int aSelectedVecColorLocation;
 unsigned int aNormalVecColorLocation;
