@@ -339,6 +339,14 @@ int learn4() {
 	aSelectedVecColorLocation = glGetUniformLocation(shaderProgram, "uSelectedColor");
 	aNormalVecColorLocation = glGetUniformLocation(shaderProgram, "uNormalColor");
 
+	glUseProgram(shaderProgram);
+		glUniform4fv(aSelectedVecColorLocation, 1, glm::value_ptr(vecSelectedColor));
+		glUniform4fv(aNormalVecColorLocation, 1, glm::value_ptr(vecNormalColor));
+
+		for (int i = 0; i < 4; i++) {
+			glUniformMatrix4fv(aMvpLocation[i], 1, GL_FALSE, glm::value_ptr(matMVP[i]));
+
+		}
 
 	glEnable(GL_PRIMITIVE_RESTART);
 	//glPrimitiveRestartIndex(0);
@@ -347,20 +355,10 @@ int learn4() {
 	while (!glfwWindowShouldClose(window))
 	{
 
-		if (n < 2) {
-			glUniform4fv(aSelectedVecColorLocation, 1, glm::value_ptr(vecSelectedColor));
-			glUniform4fv(aNormalVecColorLocation, 1, glm::value_ptr(vecNormalColor));
 
-			for (int i = 0; i < 4; i++) {
-				glUniformMatrix4fv(aMvpLocation[i], 1, GL_FALSE, glm::value_ptr(matMVP[i]));
-
-			}
-
-		}
 
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-		glUseProgram(shaderProgram);
 		glDrawElements(GL_LINE_LOOP, sizeof(elements) / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);
