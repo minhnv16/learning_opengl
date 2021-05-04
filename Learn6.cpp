@@ -10,7 +10,7 @@
 
 namespace l6 {
 
-
+#define PI 3.14159265359
 unsigned int aSelectedVecColorLocation;
 unsigned int aNormalVecColorLocation;
 unsigned int selectedId;
@@ -74,6 +74,11 @@ VertexAtt vertices[] = {
 	VertexAtt(Position(0.5f,  -0.25f, 0.0f),		2,	3),
 	VertexAtt(Position(0.5f,  -0.1f, 0.0f),			2,	3),
 
+
+	VertexAtt(Position(0.0f, 0.0f, 0.0f),			2,	4),
+	VertexAtt(Position(0.0f, 0.25f, 0.0f),			2,	4),
+	VertexAtt(Position(0.1f, 0.25f, 0.0f),			2,	4),
+	VertexAtt(Position(0.1f, 0.0f, 0.0f),			2,	4),
 };
 
 
@@ -84,7 +89,9 @@ GLuint elements[] = {
 		0,
 		11, 12, 13, 14,
 		0,
-		15,16,17,18
+		15,16,17,18,
+		0,
+		19,20,21,22,
 		};
 
 
@@ -104,13 +111,80 @@ std::vector<Object> g_vecObj;
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 }
+bool get_area_centroid(const Object &obj,float &a, float &x, float &y) {
+	a = 0.0f;
+
+	if (obj.nNumOfVertex < 3) {
+		return false;
+	}
+	std::vector<Position> vec_pos;
+	for (int i = 0; i < obj.nNumOfVertex; i++) {
+		VertexAtt vi = obj.pPointer[i];		
+		vec_pos.push_back(vi.posData);
+	}
+
+	vec_pos.push_back(obj.pPointer[0].posData);
+
+	float sum = 0.0f;
+	for (int i = 0; i < vec_pos.size()-1; i++) {
+		Position pos_i = vec_pos[i];
+		Position pos_j = vec_pos[i+1];
+		sum += (pos_i.fX * pos_j.fY - pos_j.fX * pos_i.fY);
+	}
+	a = 0.5 * sum;
+
+	float sum_x = 0.0f, sum_y = 0.0f;
+	for (int i = 0; i < vec_pos.size() - 1; i++) {
+		Position pos_i = vec_pos[i];
+		Position pos_j = vec_pos[i + 1];
+		sum_x += ((pos_i.fX + pos_j.fX) * (pos_i.fX * pos_j.fY - pos_j.fX * pos_i.fY));
+		sum_y += ((pos_i.fY + pos_j.fY) * (pos_i.fX * pos_j.fY - pos_j.fX * pos_i.fY));
+	}
+	x = sum_x / (6 * a);
+	y = sum_y / (6 * a);
+
+	return true;
+
+}
+
+void rotate_point(const float cx, const float cy, float angle, float &x, float &y)
+{
+	float s = sin(angle);
+	float c = cos(angle);
+
+	// translate point back to origin:
+	x -= cx;
+	y -= cy;
+
+	// rotate point
+	float xnew = x * c - y * s;
+	float ynew = x * s + y * c;
+
+	// translate point back:
+	x = xnew + cx;
+	y = ynew + cy;
+
+}
+
+void rotate_my_obj(Object obj, const float cx, const float cy, float angle) {
+
+	for (int i = 0; i < obj.nNumOfVertex; i++) {
+		rotate_point(cx, cy, angle, obj.pPointer[i].posData.fX, obj.pPointer[i].posData.fY);
+	}
+}
+void transition_my_obj(Object obj, const float cx, const float cy) {
+	for (int i = 0; i < obj.nNumOfVertex; i++) {
+		obj.pPointer[i].posData.fX += cx;
+		obj.pPointer[i].posData.fY += cy;
+	}
+}
 
 void key_callback_learn(GLFWwindow* window, int key, int scancode, int action, int mode) {
 
-
+	std::cout << "key :" << key << std::endl;
 	Object obj;
 	if (action == GLFW_PRESS) {
-		if (key >= 320 && key <= 323) {
+		if (key >= 320 && key <= 324) {
 			selectedId = key - 320;
 			if (selectedId <= g_vecObj.size()) {
 			}
@@ -119,7 +193,7 @@ void key_callback_learn(GLFWwindow* window, int key, int scancode, int action, i
 			}
 		}
 		obj = g_vecObj[selectedId];
-		//std::cout << "selectedId :" << selectedId << std::endl;
+
 		if (key == 32) {
 			glm::vec4 tmp = vecSelectedColor;
 			vecSelectedColor = vecNormalColor;
@@ -148,15 +222,50 @@ void key_callback_learn(GLFWwindow* window, int key, int scancode, int action, i
 			default:
 				break;
 			}
-			for (int i = 0; i < obj.nNumOfVertex; i++) {
-				obj.pPointer[i].posData.fX += trans.x;
-				obj.pPointer[i].posData.fY += trans.y;
+			transition_my_obj(obj, trans.x, trans.y);
+			int ofset = obj.pPointer - vertices;
+			glBindBuffer(GL_ARRAY_BUFFER, VBO);
+			glBufferSubData(GL_ARRAY_BUFFER, ofset * sizeof(VertexAtt), obj.nNumOfVertex * sizeof(VertexAtt), obj.pPointer);
+
+		}
+
+		if (key == 65 || key == 68) {
+
+			float angle = 0.f;
+			switch (key) {
+			case 65: //A key
+				angle = PI / 4.0f;
+				break;
+			case 68: //D key
+				angle = -PI / 4.0f;
+				break;
+			default:
+				break;
 			}
+
+
+			glm::mat4 transform = glm::mat4(1.0f);
+			float a, x, y;
+			get_area_centroid(obj, a, x, y);
+
+			rotate_my_obj(obj, x, y, angle);
+
 			int ofset = obj.pPointer - vertices;
 			glBindBuffer(GL_ARRAY_BUFFER, VBO);
 			glBufferSubData(GL_ARRAY_BUFFER, ofset * sizeof(VertexAtt), obj.nNumOfVertex * sizeof(VertexAtt), obj.pPointer);
 
 
+
+		}
+		if (key == 83 || key == 87) {
+			switch (key) {
+			case 83:	//S key
+				break;
+			case 87: //W key
+				break;
+			default:
+				break;
+			}
 
 		}
 	}
@@ -171,12 +280,7 @@ int main() {
 	g_vecObj.push_back(Object(&vertices[6], 5));
 	g_vecObj.push_back(Object(&vertices[11], 4));
 	g_vecObj.push_back(Object(&vertices[15], 4));
-
-	int ofset = &vertices[1] - vertices;
-	ofset = &vertices[6] - vertices;
-	ofset = &vertices[11] - vertices;
-	ofset = &vertices[15] - vertices;
-
+	g_vecObj.push_back(Object(&vertices[19], 4));
 
 	GLFWwindow* window = 0;
 	if (GLFW_FALSE == glfwInit()) {
@@ -218,7 +322,7 @@ int main() {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
 
-	glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(elements), elements);
+	//glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(elements), elements);
 
 
 	char const* VertexShaderSource = R"GLSL(
