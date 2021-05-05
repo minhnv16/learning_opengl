@@ -181,7 +181,7 @@ void transition_my_obj(Object obj, const float cx, const float cy) {
 
 void key_callback_learn(GLFWwindow* window, int key, int scancode, int action, int mode) {
 
-	std::cout << "key :" << key << std::endl;
+	//std::cout << "key :" << key << std::endl;
 	Object obj;
 	if (action == GLFW_PRESS) {
 		if (key >= 320 && key <= 324) {
@@ -422,10 +422,22 @@ int main() {
 	glUniform4fv(aNormalVecColorLocation, 1, glm::value_ptr(vecNormalColor));
 
 
-
+	double lastTime = glfwGetTime();
+	int nbFrames = 0;
 
 	while (!glfwWindowShouldClose(window))
 	{
+		double currentTime = glfwGetTime();
+		nbFrames++;
+		if (currentTime - lastTime >= 1.0) { // If last prinf() was more than 1 sec ago
+			// printf and reset timer
+			printf("%f ms/frame\n", 1000.0 / double(nbFrames));
+			printf("fps=%d\n", nbFrames);
+
+			nbFrames = 0;
+			lastTime = currentTime;
+		}
+
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		glDrawElements(GL_LINE_LOOP, sizeof(elements) / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
