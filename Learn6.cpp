@@ -425,6 +425,8 @@ int main() {
 	double lastTime = glfwGetTime();
 	int nbFrames = 0;
 
+	glfwSwapInterval(0);
+
 	while (!glfwWindowShouldClose(window))
 	{
 		double currentTime = glfwGetTime();

@@ -15,5 +15,6 @@ namespace l6 {
 
 int main() {
 	l6::main();
+	//sample_drawing_triangle_index();
 	return 0;
 }
