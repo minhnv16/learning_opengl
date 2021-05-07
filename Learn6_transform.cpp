@@ -182,7 +182,11 @@ int main()
 	// -----------
 	double lastTime = glfwGetTime();
 	int nbFrames = 0;
-	glfwSwapInterval(0);
+
+	//enable more than 60 fps
+	//glfwSwapInterval(0);
+
+	glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -207,15 +211,15 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// draw our first triangle
-		glUseProgram(shaderProgram);
-		glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+		//glUseProgram(shaderProgram);
 		//glDrawArrays(GL_TRIANGLES, 0, 6);
 		//glBindBuffer(GL_ARRAY_BUFFER, VBO);
 		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 
+
+		glUseProgram(shaderProgram);
 		glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
 		transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
-
 		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
 
 

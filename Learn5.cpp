@@ -22,7 +22,9 @@ glm::vec4 vecSelectedColor = glm::vec4(1.f, 0.f, 0.f, 1.f);
 glm::vec4 vecNormalColor = glm::vec4(0.f, 0.f, 1.f, 1.f);
 
 GLuint shaderProgram;
+GLuint VAO;
 GLuint VBO;
+GLuint EBO;
 
 
 struct Position {
@@ -185,6 +187,10 @@ int main() {
 		return -1;
 	}
 
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
 	int nWidth = 600, nHeight = 600;
 	window = glfwCreateWindow(nWidth, nHeight, "Test OpenGL", NULL /* glfwGetPrimaryMonitor()*/, NULL);
 
@@ -205,8 +211,9 @@ int main() {
 		return -1;
 	}
 
-
-
+	//vertex array
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
 
 	//vertex buffer objects
 	glGenBuffers(1, &VBO);
@@ -215,7 +222,6 @@ int main() {
 
 
 	//Element Buffer Object
-	GLuint EBO;
 	glGenBuffers(1, &EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
@@ -224,7 +230,7 @@ int main() {
 
 
 	char const* VertexShaderSource = R"GLSL(
-		#version 330
+		#version 330 core
 		in vec3 aPos;
 		in float isSelected;
 		out vec4 oColor; 
@@ -262,7 +268,7 @@ int main() {
 
 
 	char const* FragmentShaderSource = R"GLSL(
-		#version 330
+		#version 330 core
 		uniform vec4 vecColor;
 		out vec4 FragColor;
 		in vec4 oColor; 
@@ -298,6 +304,7 @@ int main() {
 	}
 
 
+
 	//linking vertex attribute
 	unsigned int aPosLocation = glGetAttribLocation(shaderProgram, "aPos");
 	glVertexAttribPointer(aPosLocation, 3, GL_FLOAT, GL_FALSE, sizeof(VertexAtt), 0);
@@ -307,6 +314,8 @@ int main() {
 	unsigned int aPosSelected = glGetAttribLocation(shaderProgram, "isSelected");
 	glVertexAttribPointer(aPosSelected, 1, GL_FLOAT, GL_FALSE, sizeof(VertexAtt), (void*)sizeof(Position));
 	glEnableVertexAttribArray(aPosSelected);
+
+	glBindVertexArray(0);
 
 
 	aSelectedVecColorLocation = glGetUniformLocation(shaderProgram, "uSelectedColor");
@@ -319,6 +328,7 @@ int main() {
 	glUniform4fv(aSelectedVecColorLocation, 1, glm::value_ptr(vecSelectedColor));
 	glUniform4fv(aNormalVecColorLocation, 1, glm::value_ptr(vecNormalColor));
 
+	glBindVertexArray(VAO);
 
 
 

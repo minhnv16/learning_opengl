@@ -180,7 +180,6 @@ void transition_my_obj(Object obj, const float cx, const float cy) {
 }
 
 void key_callback_learn(GLFWwindow* window, int key, int scancode, int action, int mode) {
-
 	//std::cout << "key :" << key << std::endl;
 	Object obj;
 	if (action == GLFW_PRESS) {
@@ -422,6 +421,8 @@ int main() {
 	glVertexAttribPointer(aPosSelected, 1, GL_FLOAT, GL_FALSE, sizeof(VertexAtt), (void*)sizeof(Position));
 	glEnableVertexAttribArray(aPosSelected);
 
+	glBindVertexArray(0);
+
 
 	aSelectedVecColorLocation = glGetUniformLocation(shaderProgram, "uSelectedColor");
 	aNormalVecColorLocation = glGetUniformLocation(shaderProgram, "uNormalColor");
@@ -438,6 +439,7 @@ int main() {
 	int nbFrames = 0;
 
 	glfwSwapInterval(0);
+	glBindVertexArray(VAO);
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -454,10 +456,6 @@ int main() {
 
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-
-		//glUseProgram(shaderProgram);
-		//glBindVertexArray(VAO);
-
 
 		glDrawElements(GL_LINE_LOOP, sizeof(elements) / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
 
