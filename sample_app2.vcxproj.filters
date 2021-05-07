@@ -14,6 +14,7 @@
     <ClCompile Include="Learn4.cpp" />
     <ClCompile Include="Learn5.cpp" />
     <ClCompile Include="Learn6.cpp" />
+    <ClCompile Include="Learn6_transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NewFilter1">

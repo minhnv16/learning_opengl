@@ -25,6 +25,7 @@
     <ClCompile Include="Learn4.cpp" />
     <ClCompile Include="Learn5.cpp" />
     <ClCompile Include="Learn6.cpp" />
+    <ClCompile Include="Learn6_transform.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Source0_sample_draw_aray_triangle.cpp" />
     <ClCompile Include="Source1_sample_draw_element_triangle.cpp" />
