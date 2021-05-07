@@ -286,6 +286,11 @@ int main() {
 	if (GLFW_FALSE == glfwInit()) {
 		return -1;
 	}
+	
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
 
 	int nWidth = 600, nHeight = 600;
 	window = glfwCreateWindow(nWidth, nHeight, "Test OpenGL", NULL /* glfwGetPrimaryMonitor()*/, NULL);
@@ -309,6 +314,10 @@ int main() {
 
 
 
+	unsigned int  VAO;
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+
 
 	//vertex buffer objects
 	glGenBuffers(1, &VBO);
@@ -326,7 +335,7 @@ int main() {
 
 
 	char const* VertexShaderSource = R"GLSL(
-		#version 330
+		#version 330 core
 		in vec3 aPos;
 		in float isSelected;
 		out vec4 oColor; 
@@ -364,7 +373,7 @@ int main() {
 
 
 	char const* FragmentShaderSource = R"GLSL(
-		#version 330
+		#version 330 core
 		uniform vec4 vecColor;
 		out vec4 FragColor;
 		in vec4 oColor; 
@@ -442,6 +451,11 @@ int main() {
 
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		//glUseProgram(shaderProgram);
+		//glBindVertexArray(VAO);
+
+
 		glDrawElements(GL_LINE_LOOP, sizeof(elements) / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);
