@@ -17,7 +17,7 @@ namespace l6_transform {
 }
 int main() {
 	//learn0();
-	l6::main();
-	//l6_transform::main();
+	//l6::main();
+	l6_transform::main();
 	return 0;
 }

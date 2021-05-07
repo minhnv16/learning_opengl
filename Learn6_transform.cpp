@@ -56,6 +56,8 @@ int main()
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
+	glewExperimental = GL_TRUE;
+
 	//init glew
 	GLenum err = glewInit();
 

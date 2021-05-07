@@ -304,6 +304,9 @@ int main() {
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetKeyCallback(window, key_callback_learn);
 
+	glewExperimental = GL_TRUE;
+
+
 	//init glew
 	GLenum err = glewInit();
 
