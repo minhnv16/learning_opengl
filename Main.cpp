@@ -15,10 +15,12 @@ namespace l6 {
 namespace l6_transform {
 	int main();	//learing transformation
 }
+
 int main() {
 	//learn0();
 	//l5::main();
-	l6::main();
-	//l6_transform::main();
+	//l6::main();
+	//sample_draw_element_triangle();
+	l6_transform::main();
 	return 0;
 }
